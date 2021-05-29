@@ -12,7 +12,8 @@ import java.math.BigInteger;
 @NoArgsConstructor
 public class Reply {
 
-    private Long id;
+
+    private String id;
     private User user;
     private String tag;
     private Time time;
