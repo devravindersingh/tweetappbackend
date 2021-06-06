@@ -6,15 +6,14 @@ import com.ravinder.singh.tweetappbackend.dto.request.RegisterRequest;
 import com.ravinder.singh.tweetappbackend.dto.response.LoginResponse;
 import com.ravinder.singh.tweetappbackend.dto.response.RegisterResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/api/v1.0/user")
 public interface UserApi {
-    @PostMapping("/registeruser")
+    @PostMapping("/register")
     ResponseEntity<RegisterResponse> registerUser(@RequestBody RegisterRequest registerRequest);
-    @GetMapping("/loginuser")
+    @GetMapping("/login")
     ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest);
-    @PostMapping("/forgotpassword")
-    ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest);
+    @GetMapping("/{userName}/forgot")
+    ResponseEntity<String> changePassword(@PathVariable String userName, @RequestBody ChangePasswordRequest changePasswordRequest);
 }

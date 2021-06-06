@@ -7,6 +7,6 @@ import com.ravinder.singh.tweetappbackend.dto.response.RegisterResponse;
 public interface UserService {
 
     RegisterResponse registerUser(RegisterRequest registerRequest);
-    String changePassword(ChangePasswordRequest changePasswordRequest);
+    String changePassword(String userName, ChangePasswordRequest changePasswordRequest);
 
 }

@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changePassword(ChangePasswordRequest changePasswordRequest) {
+    public String changePassword(String userName, ChangePasswordRequest changePasswordRequest) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("userName").is(changePasswordRequest.getUserName()));
+        query.addCriteria(Criteria.where("userName").is(userName));
 
         Update update = new Update();
         update.set("password", changePasswordRequest.getNewPassword());
