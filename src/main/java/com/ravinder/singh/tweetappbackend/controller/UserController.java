@@ -51,7 +51,15 @@ public class UserController implements UserApi {
     //Todo
     @Override
     public ResponseEntity<String> changePassword(ChangePasswordRequest changePasswordRequest) {
-        return null;
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(changePasswordRequest.getUserName(), changePasswordRequest.getPassword())
+            );
+        }catch (Exception ex){
+            throw ex;
+        }
+        String result = userService.changePassword(changePasswordRequest);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     public String generateToken(LoginRequest loginRequest) throws Exception {

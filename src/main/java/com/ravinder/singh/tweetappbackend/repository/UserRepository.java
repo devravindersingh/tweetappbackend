@@ -1,6 +1,7 @@
 package com.ravinder.singh.tweetappbackend.repository;
 
 import com.ravinder.singh.tweetappbackend.model.User;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

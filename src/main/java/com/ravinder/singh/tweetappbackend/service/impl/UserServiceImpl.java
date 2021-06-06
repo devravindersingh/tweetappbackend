@@ -1,5 +1,6 @@
 package com.ravinder.singh.tweetappbackend.service.impl;
 
+import com.ravinder.singh.tweetappbackend.dto.request.ChangePasswordRequest;
 import com.ravinder.singh.tweetappbackend.dto.request.RegisterRequest;
 import com.ravinder.singh.tweetappbackend.dto.response.RegisterResponse;
 import com.ravinder.singh.tweetappbackend.model.User;
@@ -8,10 +9,18 @@ import com.ravinder.singh.tweetappbackend.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    MongoTemplate mongoTemplate;
 
     @Autowired
     private UserRepository userRepository;
@@ -26,5 +35,21 @@ public class UserServiceImpl implements UserService {
             throw ex;
         }
         return new RegisterResponse(userName, "Registeration Successfull");
+    }
+
+    @Override
+    public String changePassword(ChangePasswordRequest changePasswordRequest) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userName").is(changePasswordRequest.getUserName()));
+
+        Update update = new Update();
+        update.set("password", changePasswordRequest.getNewPassword());
+
+        User updateDone = mongoTemplate.findAndModify(query, update, User.class);
+        if(updateDone != null)
+            return "Password changed successfully";
+        else
+            return "Something went wrong, Please try again";
+
     }
 }
